@@ -4,11 +4,14 @@ using UnityEngine;
 
 public class AnimateHand : MonoBehaviour
 {
+	//store incoming datastream
     GameObject data;
 	float[] nums;
 	
+	//store default joint positions and baseline glove data
 	Transform[] joints = new Transform[22];
-	Vector3[] defaults = new Vector3[22];
+	Vector3[] defaultVectors = new Vector3[22];
+	float[] defaults = {146,121,113,128,117,95,65,97,108,75,152,110,88,69,148,114,116,83,140,131,135,115};
 	Vector3 currentAngles;
 	
     // Use this for initialization
@@ -62,8 +65,12 @@ public class AnimateHand : MonoBehaviour
 		//outside of wrist
 		joints[21] = null;
 		
+		//set default joint positions
 		for (int i = 0; i < 22; i++) {
-			defaults[i] = joints[i].localEulerAngles;
+			Transform t = joints[i];
+			if (t != null) {
+				defaultVectors[i] = t.localEulerAngles;
+			}
 		}
 		
     }
@@ -74,20 +81,27 @@ public class AnimateHand : MonoBehaviour
 		
 		for (int i = 0; i < 22; i++) {
 			Transform t = joints[i];
-			Vector3 d = defaults[i];
-			float num = nums[i]/2.5f;
+			Vector3 da = defaultVectors[i];
+			float d = defaults[i];
 			
+			//difference between measure and baseline
+			float num = (nums[i] - d)/1.5f; //lower denominator -> more exaggerated motion
+			
+			//rotate joints
 			if (t != null) {
 				currentAngles = t.localEulerAngles;
 				
 				if (i <= 3) {
-					
+					//thumb motion
 				} else if (i % 3 == 0) {
-					currentAngles.z = d.z + num;
+					//finger base motion
+					currentAngles.z = da.z + num;
 				} else {
-					currentAngles.x = d.x + num;
+					//finger motion
+					currentAngles.x = da.x + num;
 				}				
 				
+				//move hand
 				t.localEulerAngles = currentAngles;
 			}
 		}		
