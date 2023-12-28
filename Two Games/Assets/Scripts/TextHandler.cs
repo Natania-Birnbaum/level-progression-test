@@ -8,6 +8,7 @@ public class TextHandler : MonoBehaviour
     string path = "Assets/" + "test.csv";
 	StreamReader reader;
 	public float[] nums;
+	string line;
 	
 	float[] ParseString(string str) {
 		
@@ -25,6 +26,7 @@ public class TextHandler : MonoBehaviour
 	// Start is called before the first frame update
     void Start()
     {
+		Debug.Log("Handler Start");
 		reader = new StreamReader(path);
     }
 
@@ -32,9 +34,8 @@ public class TextHandler : MonoBehaviour
     void Update()
     {
         //Read the text from directly from the test.csv file
-		string line = reader.ReadLine();
+		line = reader.ReadLine();
 		Debug.Log(line);
-		
 		nums = ParseString(line);
 
     }

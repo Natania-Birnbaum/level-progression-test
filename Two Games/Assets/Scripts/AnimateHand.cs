@@ -5,7 +5,7 @@ using UnityEngine;
 public class AnimateHand : MonoBehaviour
 {
 	//store incoming datastream
-    GameObject data;
+    public TextHandler data;
 	float[] nums;
 	
 	//store default joint positions and baseline glove data
@@ -16,8 +16,9 @@ public class AnimateHand : MonoBehaviour
 	
     // Use this for initialization
     void Start () {
-		data = GameObject.Find("TextHandler");
+		//data = GameObject.Find("TextHandler");
 		
+		Debug.Log("Animator Start");
 		Transform wrist = gameObject.transform.GetChild(0).GetChild(0).GetChild(0);
 		
 		//thumb base - 003
@@ -77,7 +78,7 @@ public class AnimateHand : MonoBehaviour
     
     // Update is called once per frame
     void Update () {
-		nums = data.GetComponent<TextHandler>().nums;
+		nums = data.nums;
 		
 		for (int i = 0; i < 22; i++) {
 			Transform t = joints[i];

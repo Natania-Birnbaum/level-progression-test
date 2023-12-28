@@ -4,13 +4,14 @@ using UnityEngine;
 
 public class TestNums : MonoBehaviour
 {
-	TextHandler data;
+	public TextHandler data;
 	float[] nums0;
 	
     // Start is called before the first frame update
     void Start()
     {
-        data = GameObject.Find("TextHandler").GetComponent<TextHandler>();
+        //data = GameObject.Find("TextHandler").GetComponent<TextHandler>();
+		Debug.Log("Test Start");
     }
 
     // Update is called once per frame
@@ -18,7 +19,7 @@ public class TestNums : MonoBehaviour
     {
         nums0 = data.nums;
 		
-		Debug.Log("nums0: " + data.GetComponent<TextHandler>().nums[5]);
+		Debug.Log("nums0: " + nums0[5]);
 		
     }
 }

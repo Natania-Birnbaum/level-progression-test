@@ -7,6 +7,7 @@ using TMPro;
 public class DisplayText : MonoBehaviour
 {
 	TextMeshPro mesh;
+	public CalculateParameters calc;
 	float[] speed;
 	float[] fractionation;
 		
@@ -16,8 +17,10 @@ public class DisplayText : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-		speed = GameObject.Find("Hand").GetComponent<CalculateParameters>().speed;
-		fractionation = GameObject.Find("Hand").GetComponent<CalculateParameters>().fractionation;
+		Debug.Log("Display Start");
+		
+		speed = calc.speed;
+		fractionation = calc.fractionation;
 		
         mesh = GetComponent<TextMeshPro>();
 		mesh.text = string.Format("Speed: {0}\nFractionation: {1}", speed, fractionation);

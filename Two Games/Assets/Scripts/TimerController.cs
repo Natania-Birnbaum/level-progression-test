@@ -5,16 +5,16 @@ using UnityEngine;
 public class TimerController : MonoBehaviour
 {
 	public float time;
-	public int timeLimit;
-	public int rest;
+	public float timeLimit;
+	public float rest;
 	public bool timerActive;
 	
     // Start is called before the first frame update
     void Start()
     {
-        time = 0;
-		timeLimit = 5;
-		rest = 2;
+        time = 0f;
+		timeLimit = 2.5f;
+		rest = 3.5f;
 		timerActive = false;
     }
 

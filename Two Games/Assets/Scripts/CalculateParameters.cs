@@ -5,8 +5,8 @@ using UnityEngine;
 public class CalculateParameters : MonoBehaviour
 {
 	//store incoming datastream
-    GameObject data;
-	float[] nums = new float[22];
+    public TextHandler data;
+	float[] nums;
 	
 	//store parameters for each finger
 	public float[] speed = new float[5];
@@ -15,6 +15,7 @@ public class CalculateParameters : MonoBehaviour
 	
 	//store current and previous states
 	int cur = 0;
+	float dis = 0;
 	float[] prevState = {146,121,113,128,117,95,65,97,108,75,152,110,88,69,148,114,116,83,140,131,135,115};
 	float[] prevSpeed = new float[22];
 	
@@ -22,7 +23,8 @@ public class CalculateParameters : MonoBehaviour
     void Start()
     {
 		//get raw data from port
-        data = GameObject.Find("TextHandler");
+        //data = GameObject.Find("TextHandler");
+		Debug.Log("Calc Start");
     }
 
     // Update is called once per frame
@@ -34,15 +36,11 @@ public class CalculateParameters : MonoBehaviour
 			fractionation[i] = 0;
 		}
 		
-		nums = data.GetComponent<TextHandler>().nums;
+		nums = data.nums;
 		
 		for (int i = 0; i < 22; i++) {
-		
-			//difference between current and previous data point
-			float dis = nums[i] - prevState[i];
-			prevState[i] = nums[i];
 			
-			//set current finger
+			//set current finger based on joint
 			if (i <= 3) {
 				cur = 0;
 			}
@@ -58,6 +56,10 @@ public class CalculateParameters : MonoBehaviour
 			else if (i >= 15 && i <= 17) {
 				cur = 4;
 			}
+		
+			//difference between current and previous data point
+			dis = nums[i] - prevState[i];
+			prevState[i] = nums[i];
 			
 			//record speed
 			speed[cur] += dis;
@@ -67,10 +69,13 @@ public class CalculateParameters : MonoBehaviour
 			prevSpeed[cur] = speed[cur];
 		
 			//record fractionation
-			for (int j = 0; i < 5; j ++) {
-				
+			float sum = 0;
+			for (int j = 0; j < 5; j ++) {
+				//sum slopes of noninstructed digits
+				if (j != cur) {sum += deltaSpeed[j];}
 			}
-			fractionation[cur] = 0;
+			fractionation[cur] = 1 - (sum)/4;
+			//fractionation[cur] = deltaSpeed[cur];
 		}
     }
 }

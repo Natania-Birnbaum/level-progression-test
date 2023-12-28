@@ -4,16 +4,17 @@ using UnityEngine;
 
 public class IndicatorController : MonoBehaviour
 {
-	Renderer indicatorRenderer;
-	Animator animator;
-	TimerController timer;
+	public Renderer indicatorRenderer;
+	public Animator animator;
+	public TimerController timer;
 	
 	// Start is called before the first frame update
     void Start()
     {
-        indicatorRenderer = gameObject.transform.GetChild(1).GetComponent<Renderer>();
-		animator = GetComponent<Animator>();
-		timer = GameObject.Find("Timer").GetComponent<TimerController>();		
+        //indicatorRenderer = gameObject.transform.GetChild(1).GetComponent<Renderer>();
+		//animator = GetComponent<Animator>();
+		//timer = GameObject.Find("Timer").GetComponent<TimerController>();	
+		Debug.Log("Indicator Start");
     }
 
     // Update is called once per frame
